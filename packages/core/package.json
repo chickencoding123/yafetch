@@ -1,0 +1,43 @@
+{
+  "name": "@yafetch/core",
+  "version": "0.1.0-beta.0",
+  "description": "Core yafetch library. See https://www.github.com/chickencoding123/yafetch for more information.",
+  "keywords": [
+    "yafetch",
+    "@yafetch",
+    "plugins",
+    "plugin",
+    "core"
+  ],
+  "author": "chickencoding123",
+  "homepage": "https://www.github.com/chickencoding123/yafetch/tree/main/packages/core#readme",
+  "license": "MIT",
+  "source": "index.ts",
+  "main": "dist/index.js",
+  "module": "dist/es/index.js",
+  "types": "dist/index.d.ts",
+  "directories": {
+    "lib": "dist"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chickencoding123/yafetch.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/chickencoding123/yafetch/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "parcel build ./index.ts --no-source-maps && cp -p ./dist/index.d.ts ./dist/es"
+  },
+  "devDependencies": {
+    "formdata-node": "^4.3.2",
+    "node-blob": "^0.0.2"
+  }
+}

@@ -5,7 +5,7 @@ Yafetch
 
 Yet another fetch is a backward compatible, dependency free, drop-in wrapper for fetch API
   
-[![npm](https://img.shields.io/npm/v/@yafetch/core)](https://www.npmjs.com/package/@yafetch/core) [![License](https://img.shields.io/npm/l/@yafetch/core)](https://github.com/chickencoding123/yafetch/blob/main/LICENSE) [![bundle size](https://img.badgesize.io/https:/cdn.jsdelivr.net/npm/@yafetch/core/dist/index.js?max=300000&compression=gzip)](https://cdn.jsdelivr.net/npm/@yafetch/core/dist/index.js)
+[![npm](https://img.shields.io/npm/v/@yafetch/core)](https://www.npmjs.com/package/@yafetch/core) [![License](https://img.shields.io/npm/l/@yafetch/core)](https://github.com/chickencoding123/yafetch/blob/main/LICENSE) [![bundle size](https://img.badgesize.io/https:/unpkg.com/@yafetch/core/dist/index.js?max=300000&compression=gzip)](https://unpkg.com/@yafetch/core/dist/index.js)
 
 </div>
 
