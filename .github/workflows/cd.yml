@@ -1,0 +1,82 @@
+name: CD
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [development, main]
+
+jobs:
+  cd:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+          registry-url: "https://registry.npmjs.org"
+          # Defaults to the user or organization that owns the workflow file
+          scope: "@yafetch"
+
+      # the "lockfileVersion": 2 in the package-lock.json fails for npm < 7.x
+      - name: Upgrade NPM
+        run: npm install -g npm@7.20.3
+
+      - name: Setup npm
+        run: |
+          yarn logout
+
+          echo "@yafetch:registry=https://registry.npmjs.org/" > .npmrc
+          echo "registry=https://registry.npmjs.org/" >> .npmrc
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
+
+          # https://github.com/lerna/lerna/issues/2788#issuecomment-774265338 basically make sure npm is setup correctly since exits with error if not
+          npm whoami
+
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Setup git
+        run: |
+          git config user.name "$ACTOR"
+          git config user.email "18017298+$ACTOR@users.noreply.github.com"
+          git remote set-url origin https://$ACTOR:$GITHUB_TOKEN@github.com/$ACTOR/yafetch
+
+        env:
+          ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npx lerna bootstrap
+
+      - name: Build artifacts
+        run: |
+          npx lerna run build
+
+      # deploy a beta or production version depending on the merge destination
+      - name: Version and publish
+        run: |
+          if [ ${{ github.base_ref }} = development ]; then
+            npx lerna version --conventional-prerelease --preid beta --yes
+          else
+            npx lerna version --conventional-graduate --yes
+          fi
+
+          npx lerna publish from-git --yes
+
+      - name: Update docs
+        run: |
+          if [ ${{ github.base_ref }} = main ]; then
+            git checkout gh-pages
+            npm docs
+            git add -A ./docs && git commit -m 'updated docs for '
+            git push
+          fi

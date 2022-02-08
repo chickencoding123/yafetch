@@ -1,0 +1,23 @@
+{
+  "packages": [
+    "packages/*"
+  ],
+  "version": "independent",
+  "publishConfig": {
+    "access": "public"
+  },
+  "command": {
+    "publish": {
+      "conventionalCommits": true,
+      "verifyAccess": false,
+      "commitHooks": false,
+      "ignoreChanges": [
+        "*.md",
+        "*(\\.|-)test.ts"
+      ],
+      "version": {
+        "message": "chore(release): version and release commit"
+      }
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "name": "yafetch",
+  "description": "Yet another fetch is a backward compatible, dependency free, drop-in wrapper for fetch API",
+  "keywords": [
+    "fetch",
+    "wrapper",
+    "plugins",
+    "extendable"
+  ],
+  "author": "chickencoding123",
+  "homepage": "https://www.github.com/chickencoding123/yafetch",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chickencoding123/yafetch.git"
+  },
+  "bugs": {
+    "url": "https://github.com/chickencoding123/yafetch/issues"
+  },
+  "scripts": {
+    "prepare": "husky install && npx commitizen init cz-conventional-changelog --force",
+    "docs": "typedoc packages/**/index.ts packages/shared.ts",
+    "test": "jest --runInBand",
+    "test-ci": "jest --coverage",
+    "lint": "eslint --fix packages/**/*.ts"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^16.1.0",
+    "@commitlint/config-conventional": "^16.0.0",
+    "@parcel/packager-ts": "^2.2.0",
+    "@parcel/transformer-typescript-types": "^2.2.0",
+    "@types/jest": "^27.0.0",
+    "@types/node": "^17.0.8",
+    "@typescript-eslint/eslint-plugin": "^5.8.1",
+    "@typescript-eslint/parser": "^5.8.1",
+    "axios": "^0.24.0",
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.2.0",
+    "husky": "^7.0.4",
+    "jest": "^27.0.0",
+    "jest-fetch-mock": "^3.0.3",
+    "lerna": "^4.0.0",
+    "parcel": "^2.2.0",
+    "ts-jest": "^27.1.3",
+    "ts-node": "^10.4.0",
+    "typedoc": "^0.22.10",
+    "typescript": "^4.5.4"
+  },
+  "engines": {
+    "node": ">= 14"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  }
+}
