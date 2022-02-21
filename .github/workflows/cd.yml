@@ -76,7 +76,7 @@ jobs:
         run: |
           if [ ${{ github.base_ref }} = main ]; then
             npm run docs
-            tag=$(git describe --tags --abbrev=0)
+            tag="updated docs for $(git describe --tags --abbrev=0)"
 
             mkdir temp
             cd temp
@@ -87,6 +87,6 @@ jobs:
             cp -r ../../docs .
 
             git add -A
-            git commit --no-verify -m "updated docs for $tag"
+            git commit --no-verify -m $msg
             git push
           fi
