@@ -80,9 +80,13 @@ jobs:
 
             mkdir temp
             cd temp
-            git checkout gh-pages
-            cp -r ../docs docs 
-            git add -A ./docs
+
+            git worktree add -f gh-pages
+            cd gh-pages
+            git pull
+            cp -r ../../docs .
+
+            git add -A
             git commit --no-verify -m "updated docs for $tag"
             git push
           fi
