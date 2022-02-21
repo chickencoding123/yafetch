@@ -34,7 +34,7 @@
     "build": "parcel build ./index.ts --no-source-maps && cp -p ./dist/index.d.ts ./dist/es"
   },
   "devDependencies": {
-    "@yafetch/core": "^0.0.0",
+    "@yafetch/core": "^0.1.0",
     "abort-controller": "^3.0.0"
   }
 }
