@@ -1,6 +1,6 @@
 {
   "name": "@yafetch/plugin-retry",
-  "version": "0.0.1-beta.0",
+  "version": "0.0.1",
   "description": "Retry plugin for yafetch library. See https://www.github.com/chickencoding123/yafetch for more information.",
   "keywords": [
     "yafetch",
