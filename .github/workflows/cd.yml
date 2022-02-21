@@ -76,10 +76,17 @@ jobs:
         run: |
           if [ ${{ github.base_ref }} = main ]; then
             npm run docs
-            tag=$(git describe --tags --abbrev=0)
+            tag="updated docs for $(git describe --tags --abbrev=0)"
 
-            git checkout gh-pages
-            git add -A ./docs
-            git commit --no-verify -m "updated docs for $tag"
+            mkdir temp
+            cd temp
+
+            git worktree add -f gh-pages
+            cd gh-pages
+            git pull
+            cp -r ../../docs .
+
+            git add -A
+            git commit --no-verify -m $msg
             git push
           fi
