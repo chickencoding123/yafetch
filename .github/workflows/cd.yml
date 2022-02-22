@@ -83,10 +83,10 @@ jobs:
 
             git worktree add -f gh-pages
             cd gh-pages
-            git pull
+            git pull origin gh-pages
             cp -r ../../docs .
 
             git add -A
             git commit --no-verify -m $msg
-            git push
+            git push origin gh-pages
           fi
