@@ -61,8 +61,7 @@ jobs:
         run: |
           npx lerna run build
 
-      # deploy a beta or production version depending on the merge destination
-      - name: Version and publish
+      - name: Version and publish either a beta version for development or graduate the last beta, if any
         run: |
           if [ ${{ github.base_ref }} = development ]; then
             npx lerna version --conventional-prerelease --preid beta --yes
@@ -72,21 +71,46 @@ jobs:
 
           npx lerna publish from-git --yes
 
-      - name: Update docs
+      - name: Update gh-pages
         run: |
           if [ ${{ github.base_ref }} = main ]; then
+            blue='\033[0;34m'
+            green='\033[0;32m'
+            nocolor='\033[0m'
+            docs_dir=docs
+            branch=gh-pages
+            msg="updated docs for $(git describe --tags --abbrev=0)"
+
+            echo -e "${blue}Prepare work directory...${nocolor}"
+            rm -rf $branch
+
+            echo -e "${blue}Generating site...${nocolor}"
             npm run docs
-            tag="updated docs for $(git describe --tags --abbrev=0)"
 
-            mkdir temp
-            cd temp
+            echo -e "${blue}Checking out $branch...${nocolor}"
+            git worktree add -f $branch
 
-            git worktree add -f gh-pages
-            cd gh-pages
-            git pull origin gh-pages
-            cp -r ../../docs .
+            echo -e "${blue}Moving content to $docs_dir directory...${nocolor}"
+            cd $branch
+            rm -rf $docs_dir
+            mv ../$docs_dir .
 
-            git add -A
+            echo -e "${blue}Deploying $branch branch...${nocolor}"
+            git add --all
             git commit --no-verify -m $msg
-            git push origin gh-pages
+            git push origin $branch
+
+            echo -e "${blue}Cleaning up...${nocolor}"
+            cd ..
+            git worktree remove $directory
+
+            echo -e "${green}Success!${nocolor}"
+          fi
+
+      - name: Sync development with main since beta version has been graduated and changelogs generated
+        run: |
+          if [ ${{ github.base_ref }} = main ]; then
+            git checkout development
+            git merge -X theirs main
+            git push
           fi
