@@ -75,18 +75,35 @@ jobs:
       - name: Update docs
         run: |
           if [ ${{ github.base_ref }} = main ]; then
+            blue='\033[0;34m'
+            green='\033[0;32m'
+            nocolor='\033[0m'
+            docs_dir=docs
+            branch=gh-pages
+            msg="updated docs for $(git describe --tags --abbrev=0)"
+
+            echo -e "${blue}Prepare work directory...${nocolor}"
+            rm -rf $branch
+
+            echo -e "${blue}Generating site...${nocolor}"
             npm run docs
-            tag="updated docs for $(git describe --tags --abbrev=0)"
 
-            git checkout gh-pages
-            git checkout main
+            echo -e "${blue}Checking out $branch...${nocolor}"
+            git worktree add -f $branch
 
-            mkdir ../gh-pages
-            git worktree add ../gh-pages gh-pages
+            echo -e "${blue}Moving content to $docs_dir directory...${nocolor}"
+            cd $branch
+            rm -rf $docs_dir
+            mv ../$docs_dir .
 
-            cp -r ./docs ../gh-pages
-            cd ../gh-pages
-            git add -A
+            echo -e "${blue}Deploying $branch branch...${nocolor}"
+            git add --all
             git commit --no-verify -m $msg
-            git push origin gh-pages
+            git push origin $branch
+
+            echo -e "${blue}Cleaning up...${nocolor}"
+            cd ..
+            git worktree remove $directory
+
+            echo -e "${green}Success!${nocolor}"
           fi
