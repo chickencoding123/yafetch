@@ -61,8 +61,7 @@ jobs:
         run: |
           npx lerna run build
 
-      # deploy a beta or production version depending on the merge destination
-      - name: Version and publish
+      - name: Version and publish either a beta version for development or graduate the last beta, if any
         run: |
           if [ ${{ github.base_ref }} = development ]; then
             npx lerna version --conventional-prerelease --preid beta --yes
@@ -72,7 +71,7 @@ jobs:
 
           npx lerna publish from-git --yes
 
-      - name: Update docs
+      - name: Update gh-pages
         run: |
           if [ ${{ github.base_ref }} = main ]; then
             blue='\033[0;34m'
@@ -106,4 +105,12 @@ jobs:
             git worktree remove $directory
 
             echo -e "${green}Success!${nocolor}"
+          fi
+
+      - name: Sync development with main since beta version has been graduated and changelogs generated
+        run: |
+          if [ ${{ github.base_ref }} = main ]; then
+            git checkout development
+            git merge -X theirs main
+            git push
           fi
