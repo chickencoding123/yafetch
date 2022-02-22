@@ -78,14 +78,14 @@ jobs:
             npm run docs
             tag="updated docs for $(git describe --tags --abbrev=0)"
 
-            mkdir temp
-            cd temp
+            git checkout gh-pages
+            git checkout main
 
-            git worktree add -f gh-pages
-            cd gh-pages
-            git pull origin gh-pages
-            cp -r ../../docs .
+            mkdir ../gh-pages
+            git worktree add ../gh-pages gh-pages
 
+            cp -r ./docs ../gh-pages
+            cd ../gh-pages
             git add -A
             git commit --no-verify -m $msg
             git push origin gh-pages
