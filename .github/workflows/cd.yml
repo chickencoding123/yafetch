@@ -97,12 +97,12 @@ jobs:
 
             echo -e "${blue}Deploying $branch branch...${nocolor}"
             git add --all
-            git commit --no-verify -m $msg
+            git commit --no-verify -m "$msg"
             git push origin $branch
 
             echo -e "${blue}Cleaning up...${nocolor}"
             cd ..
-            git worktree remove $directory
+            git worktree remove -f "$PWD/$branch"
 
             echo -e "${green}Success!${nocolor}"
           fi
