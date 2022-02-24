@@ -90,8 +90,9 @@ jobs:
             echo -e "${blue}Checking out $branch...${nocolor}"
             git worktree add -f $branch
 
-            echo -e "${blue}Moving content to $docs_dir directory...${nocolor}"
+            echo -e "${blue}Updating site in $docs_dir directory...${nocolor}"
             cd $branch
+            git pull origin $branch
             rm -rf $docs_dir
             mv ../$docs_dir .
 
