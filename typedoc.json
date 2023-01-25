@@ -1,0 +1,9 @@
+{
+  "entryPoints": ["packages/**/index.ts", "packages/shared.ts"],
+  "entryPointStrategy": "expand",
+  "out": "./docs",
+  "plugin": ["typedoc-theme-hierarchy"],
+  "theme": "hierarchy",
+  "tsconfig": "./tsconfig.json",
+  "hideGenerator": true
+}
