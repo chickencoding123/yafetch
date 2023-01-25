@@ -1,6 +1,6 @@
 {
   "name": "@yafetch/plugin-retry",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Retry plugin for yafetch library. See https://www.github.com/chickencoding123/yafetch for more information.",
   "keywords": [
     "yafetch",
@@ -37,7 +37,7 @@
     "build": "parcel build ./index.ts --no-source-maps && cp -p ./dist/index.d.ts ./dist/es"
   },
   "devDependencies": {
-    "@yafetch/core": "^0.1.0",
+    "@yafetch/core": "^0.1.1",
     "abort-controller": "^3.0.0"
   }
 }
