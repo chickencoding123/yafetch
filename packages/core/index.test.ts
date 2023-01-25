@@ -344,7 +344,7 @@ describe('@yafetch/core', () => {
         const formData = new FormData()
         formData.append('key', 'test 6')
         const r = new Response()
-        r.formData = () => Promise.resolve(formData) as any
+        r.formData = () => Promise.resolve(formData as globalThis.FormData)
         return Promise.resolve(r)
       })
       const response = await yafetch('/options', { method: 'PATCH', baseUrl }, 'formData')
@@ -364,9 +364,9 @@ describe('@yafetch/core', () => {
             url: typeof input === 'string' ? input : input.url,
             method: init?.method as Method
           })
-          return Promise.resolve({
+          return Promise.resolve<Response>({
             text: () => Promise.resolve(response.data)
-          }) as any
+          } as Response)
         }
       }
       const fetchSpy = jest.spyOn(proxy, 'fetch')

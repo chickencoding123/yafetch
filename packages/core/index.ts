@@ -110,7 +110,7 @@ async function send(request: RequestInfo, options?: Options, returnAs?: ReturnAs
     default: {
       if (opts.body && ~~Object.getOwnPropertyNames(opts.body).length) {
         const params = new URLSearchParams()
-        Object.keys(opts.body).forEach(key => params.append(key, (opts.body as Record<string, any>)[key]))
+        Object.keys(opts.body).forEach(key => params.append(key, (opts.body)[key]))
         delete opts.body
 
         if (typeof req === 'string') {
