@@ -1,7 +1,9 @@
 name: CD
 
 on:
-  workflow_dispatch: # manual run
+  pull_request:
+    types: [closed]
+    branches: [development, main]
 
 jobs:
   cd:
