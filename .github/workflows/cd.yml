@@ -1,9 +1,9 @@
 name: CD
 
 on:
-  pull_request:
-    types: [closed]
-    branches: [development, main]
+  push:
+    branches:
+      - main
 
 jobs:
   cd:
@@ -12,21 +12,19 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: "14"
           registry-url: "https://registry.npmjs.org"
           # Defaults to the user or organization that owns the workflow file
           scope: "@yafetch"
-
-      # the "lockfileVersion": 2 in the package-lock.json fails for npm < 7.x
-      - name: Upgrade NPM
-        run: npm install -g npm@7.20.3
 
       - name: Setup npm
         run: |
